@@ -42,10 +42,14 @@ void MainWindow::paintEvent(QPaintEvent *event)
         painter.drawRect(0, 0 + MENUHEIGHT - MARGIN,
                          MainWindowSize.width(), MainWindowSize.height());
 
-        qDebug() << "--> game is started";
+//        qDebug() << "--> game is started";
 
         // drow the player's tank
         PlayerTank->PlayerDrow(painter);
+
+//        BulletDrow(painter);
+
+//        Bullet::painter_ = painter;
 
         // update the paintEvent. It's updated constantly!!! maybe it's not a good idea,
         // maybe it should update after the button pressed, but now I don't know how to do this

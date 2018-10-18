@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "player.h"
+#include "bullet.h"
 
 #include "inclusions.h"
 #include "definitions.h"
@@ -36,10 +37,10 @@ Player::Player()
 void Player::PlayerLoadBitmaps()
 {
     m_PlayerArray = new QPixmap[PlayerImagesCount];
-    m_PlayerArray[Right] = std::move(QPixmap("resources\\Player_Tank_Right.bmp"));
-    m_PlayerArray[Left]  = std::move(QPixmap("resources\\Player_Tank_Left.bmp"));
-    m_PlayerArray[Down]  = std::move(QPixmap("resources\\Player_Tank_Down.bmp"));
     m_PlayerArray[Up]    = std::move(QPixmap("resources\\Player_Tank_Up.bmp"));
+    m_PlayerArray[Right] = std::move(QPixmap("resources\\Player_Tank_Right.bmp"));
+    m_PlayerArray[Down]  = std::move(QPixmap("resources\\Player_Tank_Down.bmp"));
+    m_PlayerArray[Left]  = std::move(QPixmap("resources\\Player_Tank_Left.bmp"));
 
     qDebug() << "--> Player images is loaded";
 }
@@ -50,7 +51,7 @@ void Player::PlayerDrow(QPainter &painter)
     // paint the player tank object
     painter.drawPixmap(PlayerCurrentPositionX, PlayerCurrentPositionY, m_PlayerArray[PlayerDirection].width(), m_PlayerArray[PlayerDirection].height(), m_PlayerArray[PlayerDirection]);
 
-    qDebug() << "--> Player is drowed --> " << PlayerDirection << ", " << PlayerCurrentPositionX << "/ " << PlayerCurrentPositionY;
+//    qDebug() << "--> Player is drowed --> " << PlayerDirection << ", " << PlayerCurrentPositionX << "/ " << PlayerCurrentPositionY;
 }
 
 // init the width and height of the player object
@@ -68,16 +69,16 @@ void Player::keyPressEvent(QKeyEvent * event)
 {
     switch(event->key())
     {
+    case Qt::Key_Up:
+        PlayerDirection = Up;
+        if (PlayerCurrentPositionY > 0 + MENUHEIGHT)
+            PlayerCurrentPositionY -= PLAYERSPEED;
+        break;
+
     case Qt::Key_Right:
         PlayerDirection = Right;
         if (PlayerCurrentPositionX <= MainWindowSizeWidth - MARGIN - PlayerWidth)
             PlayerCurrentPositionX += PLAYERSPEED;
-        break;
-
-    case Qt::Key_Left:
-        PlayerDirection = Left;
-        if (PlayerCurrentPositionX > 0 + MARGIN)
-            PlayerCurrentPositionX -= PLAYERSPEED;
         break;
 
     case Qt::Key_Down:
@@ -86,18 +87,20 @@ void Player::keyPressEvent(QKeyEvent * event)
             PlayerCurrentPositionY += PLAYERSPEED;
         break;
 
-    case Qt::Key_Up:
-        PlayerDirection = Up;
-        if (PlayerCurrentPositionY > 0 + MENUHEIGHT)
-            PlayerCurrentPositionY -= PLAYERSPEED;
+    case Qt::Key_Left:
+        PlayerDirection = Left;
+        if (PlayerCurrentPositionX > 0 + MARGIN)
+            PlayerCurrentPositionX -= PLAYERSPEED;
         break;
 
     case Qt::Key_Space:
-//        Bullet * MyBullet = new Bullet();
+        Bullet * bullet = new Bullet();
+//        bullet->BulletDrow();
+
         qDebug() << "--> space button pressed";
         break;
     }
     //    this->releaseKeyboard();
 
-    qDebug() << "--> arrow button pressed " << "--> " << PlayerDirection << ", " << PlayerCurrentPositionX << "/ " << PlayerCurrentPositionY;
+//    qDebug() << "--> arrow button pressed " << "--> " << PlayerDirection << ", " << PlayerCurrentPositionX << "/ " << PlayerCurrentPositionY;
 }

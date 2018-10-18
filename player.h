@@ -5,6 +5,7 @@
 #include "inclusions.h"
 
 #include "mainwindow.h"
+#include "bullet.h"
 
 class Player: public QWidget
 {
