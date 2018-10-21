@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    // destructor for close the wgame window
+    // destructor for close the game window
     delete ui;
 }
 

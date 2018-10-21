@@ -7,7 +7,7 @@
 #include "mainwindow.h"
 #include "player.h"
 
-class Bullet: public QObject
+class Bullet: /*public QObject, */public QWidget
 {
     Q_OBJECT
 
@@ -18,20 +18,18 @@ public:
     static int BulletWidth, BulletHeight; // mesure of Bullet object
     static int BulletCurrentPositionX, BulletCurrentPositionY; // position of the Bullet wich will be change
     static Direction BulletDirection; // Bullet direction
-//    static QPainter painter_;
-
 
 public:
-    explicit Bullet();
+    explicit Bullet(QWidget *parent = 0);
     ~Bullet();
-    static void BulletLoadBitmaps(); // load the pictures of bullet in memory
-    static void BulletWidthHeightInit(); // init the width and height of the Bullet object
+    void BulletLoadBitmaps(); // load the pictures of bullet in memory
+    void BulletWidthHeightInit(); // init the width and height of the Bullet object
 
 //    void BulletDrow(/*QPainter &painter*/); // procedure for drow the Bullet
-    static void BulletDrow(QPainter &painter); // procedure for drow the Bullet
+//    void BulletDrow(QPainter &painter); // procedure for drow the Bullet
 
 private:
-//    QPainter painter_;
+    void paintEvent(QPaintEvent * event);
 
 private slots:
     void on_bulletMove(); // timer which restart the procedure of fly bullet

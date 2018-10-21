@@ -65,7 +65,7 @@ void Player::PlayerWidthHeightInit()
 }
 
 // event for the key press grab
-void Player::keyPressEvent(QKeyEvent * event)
+void Player::keyPressEvent(QKeyEvent *event)
 {
     switch(event->key())
     {
@@ -95,9 +95,8 @@ void Player::keyPressEvent(QKeyEvent * event)
 
     case Qt::Key_Space:
         Bullet * bullet = new Bullet();
-//        bullet->BulletDrow();
 
-        qDebug() << "--> space button pressed";
+        qDebug() << "--> Space button pressed";
         break;
     }
     //    this->releaseKeyboard();
