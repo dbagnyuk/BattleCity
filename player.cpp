@@ -1,19 +1,13 @@
-#include "mainwindow.h"
 #include "player.h"
-#include "bullet.h"
-
-#include "inclusions.h"
-#include "definitions.h"
 
 QPixmap * Player::m_PlayerArray; // create array for pictures of the player's tank
-//QMainWindow * MainWindow;
 
 // variables for player attributes
 int Player::PlayerWidth, Player::PlayerHeight;
 int Player::PlayerCurrentPositionX, Player::PlayerCurrentPositionY;
 Direction Player::PlayerDirection;
 
-Player::Player()
+Player::Player(QWidget *parent): QWidget(parent), painterPlayerTank(this)
 {
     // difinition for the first place of player
     PlayerCurrentPositionX = PlayerDefaultPositionX,
@@ -45,15 +39,6 @@ void Player::PlayerLoadBitmaps()
     qDebug() << "--> Player images is loaded";
 }
 
-// procedur for drow the player's tank
-void Player::PlayerDrow(QPainter &painter)
-{
-    // paint the player tank object
-    painter.drawPixmap(PlayerCurrentPositionX, PlayerCurrentPositionY, m_PlayerArray[PlayerDirection].width(), m_PlayerArray[PlayerDirection].height(), m_PlayerArray[PlayerDirection]);
-
-//    qDebug() << "--> Player is drowed --> " << PlayerDirection << ", " << PlayerCurrentPositionX << "/ " << PlayerCurrentPositionY;
-}
-
 // init the width and height of the player object
 void Player::PlayerWidthHeightInit()
 {
@@ -62,6 +47,20 @@ void Player::PlayerWidthHeightInit()
     PlayerHeight = m_PlayerArray[Up].height();
 
     qDebug() << "--> Player width and hight is initialized";
+}
+
+// procedur for drow the player's tank
+//void Player::PlayerDrow(QPainter &painter)
+void Player::paintEvent(QPaintEvent * event)
+{
+//    QPainter painter(this);
+    painterPlayerTank.begin(this);
+    // paint the player tank object
+    painterPlayerTank.drawPixmap(PlayerCurrentPositionX, PlayerCurrentPositionY, m_PlayerArray[PlayerDirection].width(), m_PlayerArray[PlayerDirection].height(), m_PlayerArray[PlayerDirection]);
+    painterPlayerTank.end();
+    this->update();
+
+//    qDebug() << "--> Player is drowed --> " << PlayerDirection << ", " << PlayerCurrentPositionX << "/ " << PlayerCurrentPositionY;
 }
 
 // event for the key press grab
@@ -95,6 +94,8 @@ void Player::keyPressEvent(QKeyEvent *event)
 
     case Qt::Key_Space:
         Bullet * bullet = new Bullet();
+//        bullet->setVisible(true);
+        bullet->show();
 
         qDebug() << "--> Space button pressed";
         break;
@@ -102,4 +103,9 @@ void Player::keyPressEvent(QKeyEvent *event)
     //    this->releaseKeyboard();
 
 //    qDebug() << "--> arrow button pressed " << "--> " << PlayerDirection << ", " << PlayerCurrentPositionX << "/ " << PlayerCurrentPositionY;
+}
+
+Player::~Player()
+{
+    qDebug() << "--> Player deleted";
 }

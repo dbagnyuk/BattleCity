@@ -5,14 +5,16 @@
 #include "inclusions.h"
 
 #include "mainwindow.h"
-#include "player.h"
 
-class Bullet: /*public QObject, */public QWidget
+class Bullet: public QWidget
 {
     Q_OBJECT
 
+private:
 //    BulletId m_Id;
     static QPixmap * m_BulletArray;
+
+    QPainter painterBullet;
 
 public:
     static int BulletWidth, BulletHeight; // mesure of Bullet object
@@ -22,14 +24,16 @@ public:
 public:
     explicit Bullet(QWidget *parent = 0);
     ~Bullet();
+
+private:
     void BulletLoadBitmaps(); // load the pictures of bullet in memory
     void BulletWidthHeightInit(); // init the width and height of the Bullet object
 
 //    void BulletDrow(/*QPainter &painter*/); // procedure for drow the Bullet
 //    void BulletDrow(QPainter &painter); // procedure for drow the Bullet
 
-private:
-    void paintEvent(QPaintEvent * event);
+protected:
+    void paintEvent(QPaintEvent * event); // painting the bullet object
 
 private slots:
     void on_bulletMove(); // timer which restart the procedure of fly bullet

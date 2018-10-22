@@ -9,12 +9,17 @@
 
 class Player: public QWidget
 {
+    Q_OBJECT
+
     PlayerId m_Id;
     static QPixmap * m_PlayerArray;
 
+private:
     // start position in the field of window for player object
     const int PlayerDefaultPositionX = (MainWindowSizeWidth - MARGIN) / 2 - 25,
               PlayerDefaultPositionY = (MainWindowSizeHeight - MENUHEIGHT) / 2 - 25;
+
+    QPainter painterPlayerTank;
 
 public:
     static int PlayerWidth, PlayerHeight; // mesure of player object
@@ -23,11 +28,15 @@ public:
 
 
 public:
-    explicit Player();
+    explicit Player(QWidget *parent = 0);
+    ~Player();
+
     static void PlayerLoadBitmaps(); // load the pictures of tank in memory
     static void PlayerWidthHeightInit(); // init the width and height of the player object
 
-    void PlayerDrow(QPainter &painter); // procedur for drow the player's tank
+protected:
+    void paintEvent(QPaintEvent * event); // procedur for drow the player's tank
+//    void PlayerDrow(QPainter &painter); // procedur for drow the player's tank
     void keyPressEvent(QKeyEvent *event); // event for the key press grab
 };
 

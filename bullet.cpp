@@ -1,8 +1,4 @@
-#include "mainwindow.h"
 #include "bullet.h"
-
-#include "inclusions.h"
-#include "definitions.h"
 
 QPixmap * Bullet::m_BulletArray; // create array for pictures of the bullet
 //QMainWindow * MainWindow;
@@ -12,7 +8,7 @@ int Bullet::BulletWidth, Bullet::BulletHeight;
 int Bullet::BulletCurrentPositionX, Bullet::BulletCurrentPositionY;
 Direction Bullet::BulletDirection;
 
-Bullet::Bullet(QWidget *parent):/* QObject()*/QWidget(parent)
+Bullet::Bullet(QWidget *parent): QWidget(parent), painterBullet(this)
 {
     // difinition for the first place of Bullet
     BulletCurrentPositionX = Player::PlayerCurrentPositionX + 12,
@@ -25,10 +21,6 @@ Bullet::Bullet(QWidget *parent):/* QObject()*/QWidget(parent)
     BulletWidthHeightInit(); // init the width and height of the Bullet object
 
     on_bulletMove(); // start bullet movement
-
-    // focuding the bullet object
-    setFocusPolicy(Qt::StrongFocus);
-    setFocus();
 
     qDebug() << "--> bullet object is created";
 }
@@ -45,20 +37,6 @@ void Bullet::BulletLoadBitmaps()
     qDebug() << "--> bullet images is loaded";
 }
 
-// procedure for drow the Bullet's tank
-//void Bullet::BulletDrow(/*QPainter &painter*/)
-//void Bullet::BulletDrow(QPainter &painter)
-void Bullet::paintEvent(QPaintEvent *event)
-{
-    QPainter painter(this);
-    painter.begin(this);
-    // paint the Bullet tank object
-    painter.drawPixmap(BulletCurrentPositionX, BulletCurrentPositionY, m_BulletArray[BulletDirection].width(), m_BulletArray[BulletDirection].height(), m_BulletArray[BulletDirection]);
-    painter.end();
-
-    qDebug() << "--> bullet is drowed --> " << BulletDirection << ", " << BulletCurrentPositionX << "/ " << BulletCurrentPositionY;
-}
-
 // init the width and height of the Bullet object
 void Bullet::BulletWidthHeightInit()
 {
@@ -67,6 +45,21 @@ void Bullet::BulletWidthHeightInit()
     BulletHeight = m_BulletArray[Up].height();
 
     qDebug() << "--> bullet width and hight is initialized";
+}
+
+// procedure for drow the Bullet's tank
+//void Bullet::BulletDrow(/*QPainter &painter*/)
+//void Bullet::BulletDrow(QPainter &painter)
+void Bullet::paintEvent(QPaintEvent *event)
+{
+//    QPainter painter(this);
+    painterBullet.begin(this);
+    // paint the Bullet tank object
+    painterBullet.drawPixmap(BulletCurrentPositionX, BulletCurrentPositionY, m_BulletArray[BulletDirection].width(), m_BulletArray[BulletDirection].height(), m_BulletArray[BulletDirection]);
+    painterBullet.end();
+    this->update();
+
+    qDebug() << "--> bullet is drowed --> " << BulletDirection << ", " << BulletCurrentPositionX << "/ " << BulletCurrentPositionY;
 }
 
 //procedure for chenge the bullet coordinate
