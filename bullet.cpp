@@ -5,22 +5,23 @@ QPixmap * Bullet::m_BulletArray; // create array for pictures of the bullet
 
 // variables for Bullet attributes
 int Bullet::BulletWidth, Bullet::BulletHeight;
-int Bullet::BulletCurrentPositionX, Bullet::BulletCurrentPositionY;
-Direction Bullet::BulletDirection;
+//int Bullet::BulletCurrentPositionX, Bullet::BulletCurrentPositionY;
+//Direction Bullet::BulletDirection;
 
-Bullet::Bullet(QWidget *parent): QWidget(parent), painterBullet(this)
+Bullet::Bullet(QWidget *parent, int PositionX, int PositionY, Direction Direct):
+               QWidget(parent), painterBullet(this), BulletCurrentPositionX(PositionX + 12), BulletCurrentPositionY(PositionY + 12), BulletDirection(Direct)
 {
     // difinition for the first place of Bullet
-    BulletCurrentPositionX = Player::PlayerCurrentPositionX + 12,
-    BulletCurrentPositionY = Player::PlayerCurrentPositionY + 12;
-    BulletDirection = Player::PlayerDirection;
+//    BulletCurrentPositionX = Player::PlayerCurrentPositionX + 12,
+//    BulletCurrentPositionY = Player::PlayerCurrentPositionY + 12;
+//    BulletDirection = Player::PlayerDirection;
 
-    qDebug() << "--> bullet start position --> " << BulletDirection << ", " << BulletCurrentPositionX << "/ " << BulletCurrentPositionY;
+//    qDebug() << "--> bullet start position --> " << BulletDirection << ", " << BulletCurrentPositionX << "/ " << BulletCurrentPositionY;
 
     BulletLoadBitmaps(); // load the pictures of tank in memory
     BulletWidthHeightInit(); // init the width and height of the Bullet object
 
-    on_bulletMove(); // start bullet movement
+    on_BulletMove_triggered(); // start trigger for Bullet movement
 
     qDebug() << "--> bullet object is created";
 }
@@ -59,11 +60,19 @@ void Bullet::paintEvent(QPaintEvent *event)
     painterBullet.end();
     this->update();
 
-    qDebug() << "--> bullet is drowed --> " << BulletDirection << ", " << BulletCurrentPositionX << "/ " << BulletCurrentPositionY;
+//    qDebug() << "--> bullet is drowed --> " << BulletDirection << ", " << BulletCurrentPositionX << "/ " << BulletCurrentPositionY;
+}
+
+// timer for run movement of bullet
+void Bullet::on_BulletMove_triggered()
+{
+    QTimer * timerBulletFly = new QTimer(this);
+    connect(timerBulletFly, SIGNAL(timeout()), this, SLOT(on_BulletMove()));
+    timerBulletFly->start(500);
 }
 
 //procedure for chenge the bullet coordinate
-void Bullet::on_bulletMove_triggered()
+void Bullet::on_BulletMove()
 {
     switch(BulletDirection)
     {
@@ -95,16 +104,7 @@ void Bullet::on_bulletMove_triggered()
         break;
     }
 
-    qDebug() << "--> bullet start position --> " << BulletDirection << ", " << BulletCurrentPositionX << "/ " << BulletCurrentPositionY;
-
-}
-
-// timer for run movement of bullet
-void Bullet::on_bulletMove()
-{
-    QTimer * timerBulletFly = new QTimer(this);
-    connect(timerBulletFly,SIGNAL(timeout()),this,SLOT(on_bulletMove_triggered()));
-    timerBulletFly->start(500);
+//    qDebug() << "--> bullet start position --> " << BulletDirection << ", " << BulletCurrentPositionX << "/ " << BulletCurrentPositionY;
 }
 
 Bullet::~Bullet()

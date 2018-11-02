@@ -43,7 +43,7 @@ void MainWindow::paintEvent(QPaintEvent *event)
         // update the paintEvent. It's updated constantly!!! maybe it's not a good idea,
         // maybe it should update after the button pressed, but now I don't know how to do this
         // I should think about it!
-        this->update();
+//        this->update();
     }
     painterMainWindow->end();
 }
@@ -64,17 +64,41 @@ void MainWindow::on_actionPlay_triggered()
     ui->actionPlay->setDisabled(true); // when the Play button pressed it go to disable mode
 
     CreateThePlayerObject();
+    on_EnemyCreate_trigger();
 }
 
-// in this procedure creates the player tank object and showed it's
+// in this procedure creates the Player tank object and showed it's
 void MainWindow::CreateThePlayerObject()
 {
    class Player * PlayerTank = new class Player(); // create the object Player Tank
-   PlayerTank->show();
+//    Player * PlayerTank = new Player();
+    PlayerTank->show();
+}
+
+// in this procedure creates the Enemy tank object
+void MainWindow::CreateTheEnemyObject()
+{
+    class Enemy * EnemyTank = new class Enemy(); // create the object Player Tank
+    EnemyTank->show();
+}
+
+// timer for create the Enemy objects
+void MainWindow::on_EnemyCreate_trigger()
+{
+    QTimer * timerEnemyCreate = new QTimer(this);
+//    connect(timerEnemyCreate,SIGNAL(timeout()),this,SLOT(CreateTheEnemyObject()));
+//    timerEnemyCreate->start(EnemyCreateDelay);
+    for (int i = 1; i <= EnemyOnFieldCount; i++)
+    {
+
+        timerEnemyCreate->singleShot(EnemyCreateDelay, this, SLOT(CreateTheEnemyObject()));
+        timerEnemyCreate->stop();
+    }
 }
 
 // destructor for close the game window
 MainWindow::~MainWindow()
 {
+//    delete PlayerTank;
     delete ui;
 }

@@ -5,8 +5,14 @@
 #define EnemyImagesCount 4  //4 pix for Enemy Tank
 #define BulletImagesCount 4 //4 pix of 4 directions for bullet
 
+#define EnemyOnFieldCount 1 //count of Enemy Tanks on field
+#define EnemyCreateDelay 5000 // deley between the Enemy Tanks create // 1000 msec = 1 sec
+#define EnemyDirectionChangeDelay 1000 // delay for Enemy Tank direction change
+#define EnemyShootDelay 5000 // delay for Enemy shooting
+
 #define MENUHEIGHT 25       // window menu height in pixels
 #define MARGIN 5            // window border size in pixels
+
 #define PLAYERSPEED 10      // how many pixels in player's step
 #define ENEMYSPEED 10       // how many pixels in enemy's step
 #define BULLETSPEED 50      // how many pixels in bullet step
@@ -16,6 +22,5 @@ enum PlayerId {Player,Enm = 4};               // I'm don't remember is for what 
 
 #define MainWindowSizeWidth 800               // width of game window in pixels
 #define MainWindowSizeHeight 600              // height of game window in pixels
-
 
 #endif // DEFINITIONS_H

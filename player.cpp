@@ -93,7 +93,7 @@ void Player::keyPressEvent(QKeyEvent *event)
         break;
 
     case Qt::Key_Space:
-        Bullet * bullet = new Bullet();
+        Bullet * bullet = new Bullet(0, PlayerCurrentPositionX, PlayerCurrentPositionY, PlayerDirection);
 //        bullet->setVisible(true);
         bullet->show();
 
@@ -102,7 +102,7 @@ void Player::keyPressEvent(QKeyEvent *event)
     }
     //    this->releaseKeyboard();
 
-//    qDebug() << "--> arrow button pressed " << "--> " << PlayerDirection << ", " << PlayerCurrentPositionX << "/ " << PlayerCurrentPositionY;
+//    qDebug() << "--> arrow button pressed --> " << PlayerDirection << ", " << PlayerCurrentPositionX << "/ " << PlayerCurrentPositionY;
 }
 
 Player::~Player()

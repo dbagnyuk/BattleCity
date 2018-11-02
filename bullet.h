@@ -18,11 +18,11 @@ private:
 
 public:
     static int BulletWidth, BulletHeight; // mesure of Bullet object
-    static int BulletCurrentPositionX, BulletCurrentPositionY; // position of the Bullet wich will be change
-    static Direction BulletDirection; // Bullet direction
+    int BulletCurrentPositionX, BulletCurrentPositionY; // position of the Bullet wich will be change
+    Direction BulletDirection; // Bullet direction
 
 public:
-    explicit Bullet(QWidget *parent = 0);
+    Bullet(QWidget *parent = 0, int PositionX = 0, int PositionY = 0, Direction Direct = Down);
     ~Bullet();
 
 private:
@@ -33,10 +33,10 @@ private:
 //    void BulletDrow(QPainter &painter); // procedure for drow the Bullet
 
 protected:
-    void paintEvent(QPaintEvent * event); // painting the bullet object
+    void paintEvent(QPaintEvent * event); // painting the Bullet object
 
 private slots:
-    void on_bulletMove(); // timer which restart the procedure of fly bullet
-    void on_bulletMove_triggered(); // trigger for bullet fly until death
+    void on_BulletMove(); // trigger for Bullet fly until death
+    void on_BulletMove_triggered(); // timer which restart the procedure of fly Bullet
 };
 #endif // BULLET_H
